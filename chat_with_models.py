@@ -1,24 +1,24 @@
 # chat_with_models.py
-from decision_engine import DecisionEngine
 from emotional_analysis import EmotionalStateAnalyzer
+from response_generator import ResponseGenerator
 
 def chat():
-    decision_engine = DecisionEngine()
     emotional_analyzer = EmotionalStateAnalyzer()
+    responder = ResponseGenerator()
 
     print("Start chatting with the AI. Type 'exit' to quit.")
-
     while True:
         user_input = input("You: ")
-        if user_input.lower() == 'exit':
+        if user_input.lower() == "exit":
             print("Goodbye!")
             break
 
-        emotional_state = emotional_analyzer.assess_emotional_state(user_input, [])
-        decision = decision_engine.evaluate_context(user_input, [])
-
+        # FIX: Use predict() instead of assess_emotional_state()
+        emotional_state = emotional_analyzer.predict(user_input)  
         print(f"Emotion: {emotional_state}")
-        print(f"Response: {decision['generated_response']}")
+
+        response = responder.generate_response(emotional_state, user_input)
+        print(f"Response: {response}")
 
 if __name__ == "__main__":
     chat()
